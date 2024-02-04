@@ -4,7 +4,7 @@ import 'package:vector_math/vector_math.dart' as v;
 class CubeTemplate {
   final double edgeLength;
   final v.Vector3 center;
-  CubeTemplate({this.edgeLength = 200.0, v.Vector3? center})
+  CubeTemplate({this.edgeLength = 400.0, v.Vector3? center})
       : center = center ?? v.Vector3.zero();
 
   List<Line> get lines {
@@ -25,23 +25,16 @@ class CubeTemplate {
   }
 
   List<v.Vector3> get points {
+    final a = edgeLength / 2;
     return [
-      v.Vector3(
-          center.x + edgeLength, center.y + edgeLength, center.z + edgeLength),
-      v.Vector3(
-          center.x + edgeLength, center.y + -edgeLength, center.z + edgeLength),
-      v.Vector3(center.x + -edgeLength, center.y + -edgeLength,
-          center.z + edgeLength),
-      v.Vector3(
-          center.x + -edgeLength, center.y + edgeLength, center.z + edgeLength),
-      v.Vector3(
-          center.x + edgeLength, center.y + edgeLength, center.z + -edgeLength),
-      v.Vector3(center.x + edgeLength, center.y + -edgeLength,
-          center.z + -edgeLength),
-      v.Vector3(center.x + -edgeLength, center.y + -edgeLength,
-          center.z + -edgeLength),
-      v.Vector3(center.x + -edgeLength, center.y + edgeLength,
-          center.z + -edgeLength),
+      v.Vector3(center.x + a, center.y + a, center.z + a),
+      v.Vector3(center.x + a, center.y + -a, center.z + a),
+      v.Vector3(center.x + -a, center.y + -a, center.z + a),
+      v.Vector3(center.x + -a, center.y + a, center.z + a),
+      v.Vector3(center.x + a, center.y + a, center.z + -a),
+      v.Vector3(center.x + a, center.y + -a, center.z + -a),
+      v.Vector3(center.x + -a, center.y + -a, center.z + -a),
+      v.Vector3(center.x + -a, center.y + a, center.z + -a),
     ];
   }
 }

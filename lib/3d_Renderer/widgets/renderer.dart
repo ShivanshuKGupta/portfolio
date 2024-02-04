@@ -4,10 +4,14 @@ import 'package:vector_math/vector_math.dart' as v;
 
 class Renderer extends StatefulWidget {
   final RendererController controller;
+  final Widget? child;
+  final Size? size;
 
   const Renderer({
     super.key,
     required this.controller,
+    this.child,
+    this.size,
   });
 
   @override
@@ -19,6 +23,7 @@ class _RendererState extends State<Renderer> {
   void initState() {
     super.initState();
     widget.controller.addListener(onRefresh);
+    widget.controller.onInit?.call();
   }
 
   @override
@@ -30,7 +35,10 @@ class _RendererState extends State<Renderer> {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-        painter: _Painter(widget.controller, shouldRefresh: true));
+      painter: _Painter(widget.controller, shouldRefresh: true),
+      size: widget.size ?? Size.zero,
+      child: widget.child,
+    );
   }
 
   void onRefresh() {
@@ -42,9 +50,15 @@ class _Painter extends CustomPainter {
   bool shouldRefresh;
   final RendererController controller;
   _Painter(this.controller, {this.shouldRefresh = true});
+  DateTime lastTime = DateTime.now();
 
   @override
   void paint(Canvas canvas, Size size) {
+    // Calculating the next frame content
+    final now = DateTime.now();
+    controller.onUpdate?.call(canvas, size, now.difference(lastTime));
+    lastTime = now;
+
     final List<v.Vector2> projectedPoints = [];
     // Rendering the points onto the screen
     for (var point in controller.points) {

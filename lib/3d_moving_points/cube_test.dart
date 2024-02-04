@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/controllers/renderer_controller.dart';
 import 'package:portfolio/3d_Renderer/models/cube_template.dart';
@@ -16,7 +18,17 @@ class CubeTest extends StatelessWidget {
       normal: v.Vector3(0, 0, -a),
       x: v.Vector3(1, 0, 0),
     ),
-    points: CubeTemplate(edgeLength: 200, center: v.Vector3.zero()).points,
+    points: CubeTemplate(edgeLength: 400, center: v.Vector3.zero()).points
+      ..addAll(List.generate(1000, (index) {
+        const width = 10000;
+        const height = 10000;
+        const depth = 10000;
+        return v.Vector3(
+          width / 2 - Random().nextDouble() * width,
+          height / 2 - Random().nextDouble() * height,
+          Random().nextDouble() * depth,
+        );
+      })),
     lines: CubeTemplate().lines,
   );
 

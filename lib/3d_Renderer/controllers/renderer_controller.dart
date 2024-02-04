@@ -8,16 +8,23 @@ class RendererController {
   // The setup of the world
   late World world;
   // The points to render
-  late List<v.Vector3> points;
+  List<v.Vector3> points = [];
   // The lines to render
   List<Line> lines = [];
+  // The function which is called before the screen is drawn
+  // Use this to calculate the next position of the points
+  final void Function(Canvas canvas, Size size, Duration timeDelta)? onUpdate;
+  final void Function()? onInit;
 
   RendererController({
     required this.world,
-    required this.points,
+    List<v.Vector3>? points,
     List<Line>? lines,
+    this.onUpdate,
+    this.onInit,
   }) {
     this.lines = lines ?? this.lines;
+    this.points = points ?? this.points;
   }
 
   // Refresh the renderer, drwaing new points and lines onto the renderer
@@ -36,9 +43,5 @@ class RendererController {
   // Remove a listener from the controller
   void removeListener(VoidCallback listener) {
     _notifier.removeListener(listener);
-  }
-
-  void dispose() {
-    _notifier.dispose();
   }
 }

@@ -43,7 +43,7 @@ class World {
     canvas.drawCircle(
       material.Offset(projectedPoint.x + size.width / 2,
           projectedPoint.y + size.height / 2),
-      100 / ep.length + 1,
+      2000 / ep.length + 1,
       paint,
     );
     return projectedPoint;
