@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/controllers/renderer_controller.dart';
-import 'package:portfolio/3d_Renderer/models/vector2_extensions.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
 class Renderer extends StatefulWidget {
@@ -55,8 +54,7 @@ class _Painter extends CustomPainter {
     for (var line in controller.lines) {
       final start = projectedPoints[line.start];
       final end = projectedPoints[line.end];
-      canvas.drawLine(
-          start.toOffset(), end.toOffset(), Paint()..color = line.color);
+      controller.world.renderLine(canvas, start, end, size, line.color);
     }
   }
 

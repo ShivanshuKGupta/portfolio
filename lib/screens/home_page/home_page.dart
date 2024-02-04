@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/3d_moving_points/cube_test.dart';
 import 'package:portfolio/3d_moving_points/moving_dots_3d.dart';
-import 'package:portfolio/3d_moving_points/test.dart';
 import 'package:portfolio/moving_dots/screens/moving_dots_screen.dart';
 
 class HomePage extends StatelessWidget {
@@ -8,7 +8,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Test();
+    // return Test();
+    return CubeTest();
 
     return const MovingDots3D(
         child: Text(

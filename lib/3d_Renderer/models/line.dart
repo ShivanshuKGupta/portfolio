@@ -5,9 +5,5 @@ class Line {
   final int end;
   final Color color;
 
-  Line({
-    required this.start,
-    required this.end,
-    this.color = Colors.white,
-  });
+  Line(this.start, this.end, [this.color = Colors.white]);
 }

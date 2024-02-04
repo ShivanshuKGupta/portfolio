@@ -21,7 +21,7 @@ class RendererController {
   }
 
   // Refresh the renderer, drwaing new points and lines onto the renderer
-  void refresh() {
+  void refreshScreen() {
     _notifier.value = DateTime.now().toString();
   }
 

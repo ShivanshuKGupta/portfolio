@@ -53,7 +53,6 @@ class _WorldPainter extends CustomPainter {
     for (var point in points) {
       projectedPoints.add(world.renderPoint(canvas, point, size));
     }
-    final paint = Paint()..color = Colors.white;
     drawline(canvas, size, projectedPoints[0], projectedPoints[1]);
     drawline(canvas, size, projectedPoints[1], projectedPoints[2]);
     drawline(canvas, size, projectedPoints[2], projectedPoints[3]);
