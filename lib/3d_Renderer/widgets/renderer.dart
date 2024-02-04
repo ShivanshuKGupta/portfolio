@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/controllers/renderer_controller.dart';
-import 'package:portfolio/3d_Renderer/models/line.dart';
 import 'package:portfolio/3d_Renderer/models/vector2_extensions.dart';
-import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
 class Renderer extends StatefulWidget {
-  final World world;
-  final List<v.Vector3> points;
-  final List<Line> lines;
-  final RendererController? controller;
+  final RendererController controller;
+
   const Renderer({
     super.key,
-    required this.world,
-    required this.points,
-    required this.lines,
-    this.controller,
+    required this.controller,
   });
 
   @override
@@ -26,20 +19,19 @@ class _RendererState extends State<Renderer> {
   @override
   void initState() {
     super.initState();
-    widget.controller?.addListener(onRefresh);
+    widget.controller.addListener(onRefresh);
   }
 
   @override
   void dispose() {
-    widget.controller?.removeListener(onRefresh);
+    widget.controller.removeListener(onRefresh);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _Painter(widget),
-    );
+        painter: _Painter(widget.controller, shouldRefresh: true));
   }
 
   void onRefresh() {
@@ -48,17 +40,19 @@ class _RendererState extends State<Renderer> {
 }
 
 class _Painter extends CustomPainter {
-  bool refresh;
-  final Renderer renderer;
-  _Painter(this.renderer, {this.refresh = true});
+  bool shouldRefresh;
+  final RendererController controller;
+  _Painter(this.controller, {this.shouldRefresh = true});
 
   @override
   void paint(Canvas canvas, Size size) {
     final List<v.Vector2> projectedPoints = [];
-    for (var point in renderer.points) {
-      projectedPoints.add(renderer.world.renderPoint(canvas, point, size));
+    // Rendering the points onto the screen
+    for (var point in controller.points) {
+      projectedPoints.add(controller.world.renderPoint(canvas, point, size));
     }
-    for (var line in renderer.lines) {
+    // Rendering the lines onto the screen
+    for (var line in controller.lines) {
       final start = projectedPoints[line.start];
       final end = projectedPoints[line.end];
       canvas.drawLine(
@@ -68,10 +62,14 @@ class _Painter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    if (refresh) {
-      refresh = false;
+    //  This is in place to just make sure to only to repaint
+    //  when controller.refresh is called
+    if (shouldRefresh) {
+      //  If this is the first refresh then we don't want to refresh again
+      //  after refreshing this time.
+      shouldRefresh = false;
       return true;
     }
-    return refresh;
+    return shouldRefresh;
   }
 }

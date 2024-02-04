@@ -3,15 +3,15 @@ import 'package:vector_math/vector_math.dart';
 
 class World {
   // The position of eye in 3d space.
-  final Vector3 eye;
+  Vector3 eye;
   // The vector in between eye and the mid point of the screen.
-  final Vector3 normal;
+  Vector3 normal;
   // unit vector pointing towards the +ve x-axis of the screen.
   Vector3 x;
   // unit vector pointing towards the +ve y-axis of the screen.
-  late final Vector3 y;
+  late Vector3 y;
   // The MidPoint of the screen
-  late final Vector3 M;
+  late Vector3 M;
 
   World({
     required this.eye,

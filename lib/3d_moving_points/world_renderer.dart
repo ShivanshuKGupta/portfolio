@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
-class Renderer extends StatefulWidget {
+class WorldRenderer extends StatefulWidget {
   final List<v.Vector3> points;
-  const Renderer({super.key, required this.points});
+  const WorldRenderer({super.key, required this.points});
 
   @override
-  State<Renderer> createState() => _RendererState();
+  State<WorldRenderer> createState() => _WorldRendererState();
 }
 
-class _RendererState extends State<Renderer> {
+class _WorldRendererState extends State<WorldRenderer> {
   double a = 200; // edge length / 2
   late v.Vector3 eye;
   @override

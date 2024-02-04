@@ -43,7 +43,7 @@ class _MovingDots3DState extends State<MovingDots3D> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Renderer(points: spheres),
+              child: WorldRenderer(points: spheres),
             ),
             widget.child,
           ],
