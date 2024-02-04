@@ -39,13 +39,13 @@ class Dot {
 
   void fixPosition(Size size, [double margin = 200]) {
     if (position.dx < -margin) {
-      position = Offset(size.width, position.dy);
+      position = Offset(size.width + margin, position.dy);
     } else if (position.dx > size.width + margin) {
-      position = Offset(0, position.dy);
+      position = Offset(-margin, position.dy);
     } else if (position.dy < -margin) {
-      position = Offset(position.dx, size.height);
+      position = Offset(position.dx, size.height + margin);
     } else if (position.dy > size.height + margin) {
-      position = Offset(position.dx, 0);
+      position = Offset(position.dx, -margin);
     }
   }
 }

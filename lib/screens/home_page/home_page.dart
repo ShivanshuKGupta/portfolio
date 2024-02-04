@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/3d_moving_points/moving_dots_3d.dart';
 import 'package:portfolio/moving_dots/screens/moving_dots_screen.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,13 +7,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return const MovingDots3D(
-    //     child: Text(
-    //   "Hehe",
-    //   style: TextStyle(
-    //     color: Colors.white,
-    //   ),
-    // ));
+    return const MovingDots3D(
+        child: Text(
+      "Hehe",
+      style: TextStyle(
+        color: Colors.white,
+      ),
+    ));
 
     return MovingDotsScreen(
       child: Container(

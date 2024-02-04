@@ -24,7 +24,7 @@ class World {
   }
 
   // Projects a 3d point onto the 2d screen
-  Vector2 _project(Vector3 point) {
+  Vector2 projectPoint(Vector3 point) {
     final ep = point - eye;
     final r = (normal.length * normal.length * ep.length / ep.dot(normal));
     final eq = ep * r / ep.length;
@@ -36,7 +36,7 @@ class World {
   // Renders a 3d point onto the 2d canvas
   Vector2 renderPoint(
       material.Canvas canvas, Vector3 point, material.Size size) {
-    final projectedPoint = _project(point);
+    final projectedPoint = projectPoint(point);
     final ep = point - eye;
     final paint = material.Paint()..color = material.Colors.white;
     canvas.drawCircle(

@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/3dPoints/widgets/world_renderer.dart';
+import 'package:portfolio/3d_moving_points/world_renderer.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
 class MovingDots3D extends StatefulWidget {
@@ -42,7 +43,7 @@ class _MovingDots3DState extends State<MovingDots3D> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: WorldRenderer(points: spheres),
+              child: Renderer(points: spheres),
             ),
             widget.child,
           ],
@@ -52,7 +53,7 @@ class _MovingDots3DState extends State<MovingDots3D> {
   }
 
   Future<void> _update() async {
-    const fps = 15;
+    const fps = kDebugMode ? 0 : 15;
     const timeDelta = 1 / fps;
     _updatePositions(timeDelta);
     setState(() {});

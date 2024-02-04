@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/3dPoints/models/world.dart';
+import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
-class WorldRenderer extends StatefulWidget {
+class Renderer extends StatefulWidget {
   final List<v.Vector3> points;
-  const WorldRenderer({super.key, required this.points});
+  const Renderer({super.key, required this.points});
 
   @override
-  State<WorldRenderer> createState() => _WorldRendererState();
+  State<Renderer> createState() => _RendererState();
 }
 
-class _WorldRendererState extends State<WorldRenderer> {
+class _RendererState extends State<Renderer> {
   double a = 200; // edge length / 2
   late v.Vector3 eye;
   @override
@@ -28,6 +28,7 @@ class _WorldRendererState extends State<WorldRenderer> {
               (MediaQuery.of(context).size.width / 2 - event.position.dx),
               (MediaQuery.of(context).size.height / 2 - event.position.dy),
               4 * a);
+          //TODO: tilt the normal here
         });
       },
       child: CustomPaint(
