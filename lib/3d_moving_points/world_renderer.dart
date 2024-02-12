@@ -49,22 +49,22 @@ class _WorldPainter extends CustomPainter {
     final normal = v.Vector3(0, 0, -a);
     final x = v.Vector3(1, 0, 0);
     final world = World(eye: eye, normal: normal, x: x);
-    final List<v.Vector2> projectedPoints = [];
+    final List<v.Vector2?> projectedPoints = [];
     for (var point in points) {
       projectedPoints.add(world.renderPoint(canvas, point, size));
     }
-    drawline(canvas, size, projectedPoints[0], projectedPoints[1]);
-    drawline(canvas, size, projectedPoints[1], projectedPoints[2]);
-    drawline(canvas, size, projectedPoints[2], projectedPoints[3]);
-    drawline(canvas, size, projectedPoints[3], projectedPoints[0]);
-    drawline(canvas, size, projectedPoints[4], projectedPoints[5]);
-    drawline(canvas, size, projectedPoints[5], projectedPoints[6]);
-    drawline(canvas, size, projectedPoints[6], projectedPoints[7]);
-    drawline(canvas, size, projectedPoints[7], projectedPoints[4]);
-    drawline(canvas, size, projectedPoints[0], projectedPoints[4]);
-    drawline(canvas, size, projectedPoints[1], projectedPoints[5]);
-    drawline(canvas, size, projectedPoints[2], projectedPoints[6]);
-    drawline(canvas, size, projectedPoints[3], projectedPoints[7]);
+    drawline(canvas, size, projectedPoints[0]!, projectedPoints[1]!);
+    drawline(canvas, size, projectedPoints[1]!, projectedPoints[2]!);
+    drawline(canvas, size, projectedPoints[2]!, projectedPoints[3]!);
+    drawline(canvas, size, projectedPoints[3]!, projectedPoints[0]!);
+    drawline(canvas, size, projectedPoints[4]!, projectedPoints[5]!);
+    drawline(canvas, size, projectedPoints[5]!, projectedPoints[6]!);
+    drawline(canvas, size, projectedPoints[6]!, projectedPoints[7]!);
+    drawline(canvas, size, projectedPoints[7]!, projectedPoints[4]!);
+    drawline(canvas, size, projectedPoints[0]!, projectedPoints[4]!);
+    drawline(canvas, size, projectedPoints[1]!, projectedPoints[5]!);
+    drawline(canvas, size, projectedPoints[2]!, projectedPoints[6]!);
+    drawline(canvas, size, projectedPoints[3]!, projectedPoints[7]!);
   }
 
   @override

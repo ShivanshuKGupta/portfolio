@@ -22,8 +22,10 @@ class _RendererState extends State<Renderer> {
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(onRefresh);
-    widget.controller.onInit?.call();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget.controller.addListener(onRefresh);
+      widget.controller.onInit?.call();
+    });
   }
 
   @override
@@ -59,7 +61,7 @@ class _Painter extends CustomPainter {
     controller.onUpdate?.call(canvas, size, now.difference(lastTime));
     lastTime = now;
 
-    final List<v.Vector2> projectedPoints = [];
+    final List<v.Vector2?> projectedPoints = [];
     // Rendering the points onto the screen
     for (var point in controller.points) {
       projectedPoints.add(controller.world.renderPoint(canvas, point, size));
@@ -68,6 +70,7 @@ class _Painter extends CustomPainter {
     for (var line in controller.lines) {
       final start = projectedPoints[line.start];
       final end = projectedPoints[line.end];
+      if (start == null || end == null) continue;
       controller.world.renderLine(canvas, start, end, size, line.color);
     }
   }

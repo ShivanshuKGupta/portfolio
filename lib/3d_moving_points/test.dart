@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/controllers/renderer_controller.dart';
+import 'package:portfolio/3d_Renderer/models/cube_template.dart';
 import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:portfolio/3d_Renderer/widgets/renderer.dart';
 import 'package:vector_math/vector_math.dart' as v;
@@ -24,10 +25,10 @@ class _MovingDots3dTestState extends State<MovingDots3dTest> {
         normal: v.Vector3(0, 0, -200),
         x: v.Vector3(1, 0, 0),
       ),
-      points: points,
+      points: CubeTemplate(edgeLength: 400).points,
       onInit: () {
         // add points here randomly
-        points.addAll(List.generate(100, (index) {
+        points.addAll(List.generate(0, (index) {
           return v.Vector3(
             index * 10,
             0,
