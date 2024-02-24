@@ -39,8 +39,8 @@ class _CubeTestState extends State<CubeTest> {
       points: CubeTemplate(edgeLength: 400, center: v.Vector3.zero()).points
         // [
         ..addAll(List.generate(1000, (index) {
-          const width = 1000;
-          const height = 1000;
+          const width = 10000;
+          const height = 10000;
           const depth = 1000;
           return v.Vector3(
             width / 2 - Random().nextDouble() * width,

@@ -11,9 +11,14 @@ class RendererController {
   List<v.Vector3> points = [];
   // The lines to render
   List<Line> lines = [];
+
+  /// Whether to draw the next frame
+  bool drawNextFrame = true;
   // The function which is called before the screen is drawn
   // Use this to calculate the next position of the points
   final void Function(Canvas canvas, Size size, Duration timeDelta)? onUpdate;
+
+  /// The function which is called when the controller is initialized
   final void Function()? onInit;
 
   RendererController({
@@ -29,6 +34,7 @@ class RendererController {
 
   // Refresh the renderer, drwaing new points and lines onto the renderer
   void refreshScreen() {
+    drawNextFrame = true;
     _notifier.value = DateTime.now().toString();
   }
 

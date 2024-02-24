@@ -37,7 +37,7 @@ class _RendererState extends State<Renderer> {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _Painter(widget.controller, shouldRefresh: true),
+      painter: _Painter(widget.controller),
       size: widget.size ?? Size.zero,
       child: widget.child,
     );
@@ -49,9 +49,8 @@ class _RendererState extends State<Renderer> {
 }
 
 class _Painter extends CustomPainter {
-  bool shouldRefresh;
   final RendererController controller;
-  _Painter(this.controller, {this.shouldRefresh = true});
+  _Painter(this.controller);
   DateTime lastTime = DateTime.now();
 
   @override
@@ -79,12 +78,12 @@ class _Painter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     //  This is in place to just make sure to only to repaint
     //  when controller.refresh is called
-    if (shouldRefresh) {
+    if (controller.drawNextFrame) {
       //  If this is the first refresh then we don't want to refresh again
       //  after refreshing this time.
-      shouldRefresh = false;
+      controller.drawNextFrame = false;
       return true;
     }
-    return shouldRefresh;
+    return controller.drawNextFrame;
   }
 }
