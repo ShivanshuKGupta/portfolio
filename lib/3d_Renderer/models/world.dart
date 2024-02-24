@@ -28,10 +28,10 @@ class World {
   Vector2? projectPoint(Vector3 point) {
     final ep = point - eye;
     final r = (normal.length * normal.length * ep.length / ep.dot(normal));
-    if (r < normal.length) {
-      return null;
-    }
     final eq = ep * r / ep.length;
+    if (ep.length < eq.length || ep.dot(eq) < 0) {
+      return null; // The point is behind the screen
+    }
     final mq = eq - normal;
     final projectedPoint = Vector2(mq.dot(x), mq.dot(y));
     return projectedPoint;
