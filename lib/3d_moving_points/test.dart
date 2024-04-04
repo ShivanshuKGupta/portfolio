@@ -1,8 +1,9 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/controllers/renderer_controller.dart';
 import 'package:portfolio/3d_Renderer/models/cube_template.dart';
+import 'package:portfolio/3d_Renderer/models/point.dart';
 import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:portfolio/3d_Renderer/widgets/renderer.dart';
 import 'package:vector_math/vector_math.dart' as v;
@@ -20,32 +21,66 @@ class _MovingDots3dTestState extends State<MovingDots3dTest> {
   @override
   void initState() {
     super.initState();
+    double a = 200;
+    const double xMargin = 10000;
+    const double yMargin = 10000;
+    const double zMargin = 10000;
     _controller = RendererController(
       world: World(
-        eye: v.Vector3(0, 0, 4 * 200),
-        normal: v.Vector3(0, 0, -200),
+        eye: v.Vector3(0, 0, 4 * a),
+        normal: v.Vector3(0, 0, -a),
         x: v.Vector3(1, 0, 0),
       ),
-      points: CubeTemplate(edgeLength: 400).points,
+      points: CubeTemplate(edgeLength: 2 * a).points,
+      lines: CubeTemplate(edgeLength: 2 * a).lines,
       onInit: () {
-        // add points here randomly
-        _controller.points.addAll(List.generate(100, (index) {
-          return v.Vector3(
-            index * 10,
-            index * 10,
-            -index * 10,
+        _controller.points.addAll(List.generate(1000, (index) {
+          return Point(
+            position: v.Vector3(
+              math.Random().nextDouble() * xMargin - xMargin / 2,
+              math.Random().nextDouble() * yMargin - yMargin / 2,
+              math.Random().nextDouble() * zMargin - zMargin / 2,
+            ),
+            velocity: v.Vector3(
+              math.Random().nextDouble() * 4 - 2,
+              math.Random().nextDouble() * 4 - 2,
+              math.Random().nextDouble() * 4 - 2,
+            ),
+            radius: 1,
+            // color: Colors.primaries[index % Colors.primaries.length],
           );
         }));
       },
-      onUpdate: (canvas, size, timeDelta) {
-        // move the points here
+      beforeUpdate: (canvas, size, timeDelta) {
+        _controller.updatePointPositions(const Duration(milliseconds: 1));
+        // points which moved out of margin should reappear on the other side
         for (var point in _controller.points) {
-          point.x += 1;
-          point.y += 1;
-          point.z -= -1;
+          if (point.x > xMargin / 2) {
+            point.x = -xMargin / 2;
+          } else if (point.x < -xMargin / 2) {
+            point.x = xMargin / 2;
+          }
+          if (point.y > yMargin / 2) {
+            point.y = -yMargin / 2;
+          } else if (point.y < -yMargin / 2) {
+            point.y = yMargin / 2;
+          }
+          if (point.z > zMargin / 2) {
+            point.z = -zMargin / 2;
+          } else if (point.z < -zMargin / 2) {
+            point.z = zMargin / 2;
+          }
         }
       },
     );
+    startSimulation();
+  }
+
+  void startSimulation() {
+    Future.delayed(const Duration(milliseconds: 1000 ~/ 60), () {
+      _controller.refreshScreen();
+      startSimulation();
+    });
   }
 
   @override
@@ -58,8 +93,8 @@ class _MovingDots3dTestState extends State<MovingDots3dTest> {
           final height = MediaQuery.of(context).size.height;
           const r = 800;
           final eye = _controller.world.eye;
-          final theta1 = acos(eye.x / r);
-          const theta = 1 / 2 * pi;
+          final theta1 = math.acos(eye.x / r);
+          const theta = 1 / 2 * math.pi;
           // _controller.world.eye = v.Vector3(
           //     r * cos(theta1 + theta), eye.y, r * sin(theta1 + theta));
           // _controller.world.eye = v.Vector3(eye.x + r * sin(theta), eye.y,
@@ -72,7 +107,7 @@ class _MovingDots3dTestState extends State<MovingDots3dTest> {
               -200 * 0.2 * (width / 2 - event.position.dx) / (width / 2),
               -200 * 0.2 * (height / 2 - event.position.dy) / (height / 2),
               -200);
-          // _controller.refreshScreen();
+          _controller.refreshScreen();
         },
         child: SizedBox(
           height: MediaQuery.of(context).size.height,

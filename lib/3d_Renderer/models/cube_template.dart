@@ -1,4 +1,5 @@
 import 'package:portfolio/3d_Renderer/models/line.dart';
+import 'package:portfolio/3d_Renderer/models/point.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
 class CubeTemplate {
@@ -24,17 +25,17 @@ class CubeTemplate {
     ];
   }
 
-  List<v.Vector3> get points {
+  List<Point> get points {
     final a = edgeLength / 2;
     return [
-      v.Vector3(center.x + a, center.y + a, center.z + a),
-      v.Vector3(center.x + a, center.y + -a, center.z + a),
-      v.Vector3(center.x + -a, center.y + -a, center.z + a),
-      v.Vector3(center.x + -a, center.y + a, center.z + a),
-      v.Vector3(center.x + a, center.y + a, center.z + -a),
-      v.Vector3(center.x + a, center.y + -a, center.z + -a),
-      v.Vector3(center.x + -a, center.y + -a, center.z + -a),
-      v.Vector3(center.x + -a, center.y + a, center.z + -a),
+      Point(position: v.Vector3(center.x + a, center.y + a, center.z + a)),
+      Point(position: v.Vector3(center.x + a, center.y + -a, center.z + a)),
+      Point(position: v.Vector3(center.x + -a, center.y + -a, center.z + a)),
+      Point(position: v.Vector3(center.x + -a, center.y + a, center.z + a)),
+      Point(position: v.Vector3(center.x + a, center.y + a, center.z + -a)),
+      Point(position: v.Vector3(center.x + a, center.y + -a, center.z + -a)),
+      Point(position: v.Vector3(center.x + -a, center.y + -a, center.z + -a)),
+      Point(position: v.Vector3(center.x + -a, center.y + a, center.z + -a)),
     ];
   }
 }

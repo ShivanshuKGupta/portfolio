@@ -1,8 +1,9 @@
-import 'dart:math';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:portfolio/3d_Renderer/controllers/renderer_controller.dart';
 import 'package:portfolio/3d_Renderer/models/cube_template.dart';
+import 'package:portfolio/3d_Renderer/models/point.dart';
 import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:portfolio/3d_Renderer/widgets/renderer.dart';
 import 'package:vector_math/vector_math.dart' as v;
@@ -42,11 +43,12 @@ class _CubeTestState extends State<CubeTest> {
           const width = 10000;
           const height = 10000;
           const depth = 1000;
-          return v.Vector3(
-            width / 2 - Random().nextDouble() * width,
-            height / 2 - Random().nextDouble() * height,
-            200 - Random().nextDouble() * depth,
-          );
+          return Point(
+              position: v.Vector3(
+            width / 2 - math.Random().nextDouble() * width,
+            height / 2 - math.Random().nextDouble() * height,
+            800 - math.Random().nextDouble() * depth,
+          ));
         })),
       onInit: () {
         // const double minDistance = 200;
@@ -64,7 +66,7 @@ class _CubeTestState extends State<CubeTest> {
         // }
       },
       lines: CubeTemplate().lines,
-      onUpdate: (canvas, size, timeDelta) {
+      beforeUpdate: (canvas, size, timeDelta) {
         // if (velocities.isEmpty) {
         //   velocities.addAll(List.generate(_controller.points.length, (index) {
         //     return v.Vector3(
@@ -125,8 +127,8 @@ class _CubeTestState extends State<CubeTest> {
           final height = MediaQuery.of(context).size.height;
           const r = 800;
           final eye = _controller.world.eye;
-          final theta1 = acos(eye.x / r);
-          const theta = 1 / 2 * pi;
+          final theta1 = math.acos(eye.x / r);
+          const theta = 1 / 2 * math.pi;
           // _controller.world.eye = v.Vector3(
           //     r * cos(theta1 + theta), eye.y, r * sin(theta1 + theta));
           // _controller.world.eye = v.Vector3(eye.x + r * sin(theta), eye.y,

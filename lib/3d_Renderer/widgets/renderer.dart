@@ -57,7 +57,7 @@ class _Painter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Calculating the next frame content
     final now = DateTime.now();
-    controller.onUpdate?.call(canvas, size, now.difference(lastTime));
+    controller.beforeUpdate?.call(canvas, size, now.difference(lastTime));
     lastTime = now;
 
     final List<v.Vector2?> projectedPoints = [];
@@ -77,13 +77,13 @@ class _Painter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     //  This is in place to just make sure to only to repaint
-    //  when controller.refresh is called
+    //  when controller.refresh is called, not every time setState is called
     if (controller.drawNextFrame) {
       //  If this is the first refresh then we don't want to refresh again
       //  after refreshing this time.
       controller.drawNextFrame = false;
       return true;
     }
-    return controller.drawNextFrame;
+    return false;
   }
 }

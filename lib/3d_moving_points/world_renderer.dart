@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/3d_Renderer/models/point.dart';
 import 'package:portfolio/3d_Renderer/models/world.dart';
 import 'package:vector_math/vector_math.dart' as v;
 
@@ -51,7 +52,8 @@ class _WorldPainter extends CustomPainter {
     final world = World(eye: eye, normal: normal, x: x);
     final List<v.Vector2?> projectedPoints = [];
     for (var point in points) {
-      projectedPoints.add(world.renderPoint(canvas, point, size));
+      projectedPoints
+          .add(world.renderPoint(canvas, Point(position: point), size));
     }
     drawline(canvas, size, projectedPoints[0]!, projectedPoints[1]!);
     drawline(canvas, size, projectedPoints[1]!, projectedPoints[2]!);

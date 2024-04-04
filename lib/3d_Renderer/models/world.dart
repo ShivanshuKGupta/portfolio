@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' as material;
+import 'package:portfolio/3d_Renderer/models/point.dart';
 import 'package:portfolio/3d_Renderer/models/vector2_extensions.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -29,7 +30,7 @@ class World {
     final ep = point - eye;
     final r = (normal.length * normal.length * ep.length / ep.dot(normal));
     final eq = ep * r / ep.length;
-    if (ep.length < eq.length || ep.dot(eq) < 0) {
+    if (ep.dot(normal) < 0) {
       return null; // The point is behind the screen
     }
     final mq = eq - normal;
@@ -39,15 +40,15 @@ class World {
 
   // Renders a 3d point onto the 2d canvas
   Vector2? renderPoint(
-      material.Canvas canvas, Vector3 point, material.Size size) {
-    final projectedPoint = projectPoint(point);
+      material.Canvas canvas, Point point, material.Size size) {
+    final projectedPoint = projectPoint(point.position);
     if (projectedPoint == null) return null;
-    final ep = point - eye;
-    final paint = material.Paint()..color = material.Colors.white;
+    final ep = point.position - eye;
+    final paint = material.Paint()..color = point.color;
     canvas.drawCircle(
       material.Offset(projectedPoint.x + size.width / 2,
           projectedPoint.y + size.height / 2),
-      2000 / ep.length + 1,
+      2000 / ep.length + point.radius,
       paint,
     );
     return projectedPoint;
